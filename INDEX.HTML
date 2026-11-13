@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#7357e8">
+  <title>Palabritas</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="image.png">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Palabritas">
+        <span class="brand-mark">🌈</span><span><b>Palabritas</b></span>
+      </a>
+      <div class="top-actions">
+        <button id="musicToggle" class="icon-btn" title="Activar o silenciar música de fondo" aria-label="Música">🎵</button>
+        <button id="soundToggle" class="icon-btn" title="Activar o silenciar sonidos" aria-label="Sonido">🔊</button>
+        <button id="themeToggle" class="icon-btn" title="Cambiar tema" aria-label="Cambiar tema">🌙</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="welcomeScreen" class="screen welcome-screen">
+        <div class="welcome-art" aria-hidden="true">
+          <span class="cloud cloud-one">☁️</span><span class="cloud cloud-two">☁️</span>
+          <div class="rainbow">🌈</div>
+          <div class="mascot">🦊</div>
+          <span class="sparkle sparkle-one">✨</span><span class="sparkle sparkle-two">⭐</span>
+        </div>
+        <div class="welcome-copy">
+          <p class="eyebrow">¡APRENDER ES UNA AVENTURA!</p>
+          <h1>¡Hola, pequeño<br><span>explorador!</span></h1>
+          <p class="intro">Juega, descubre letras, forma palabras y conviértete en un gran lector. ¡Tú puedes!</p>
+          <div class="profile-panel">
+            <h2>¿Quién va a jugar hoy?</h2>
+            <label for="profileSelect">Elige tu usuario</label>
+            <div class="profile-row">
+              <select id="profileSelect" aria-label="Seleccionar usuario"></select>
+              <button id="deleteProfile" class="small-icon-btn" title="Eliminar usuario seleccionado">🗑️</button>
+            </div>
+            <label for="newName">O crea un nuevo perfil</label>
+            <div class="profile-row">
+              <input id="newName" maxlength="18" placeholder="Escribe tu nombre" autocomplete="off">
+              <button id="createProfile" class="primary-btn compact">Crear</button>
+            </div>
+            <button id="startButton" class="primary-btn start-btn">¡COMENZAR A JUGAR! <span>🚀</span></button>
+            <p class="tiny-note">Tu avance se guarda en este dispositivo.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="loadingScreen" class="screen loading-screen hidden">
+        <div class="loader-mascot">🐼</div>
+        <h2>¡Preparamos tu aventura!</h2>
+        <p id="loadingMessage">Las letras están despertando...</p>
+        <div class="loading-track"><div id="loadingBar"></div></div>
+        <div class="loading-bubbles"><span>🔤</span><span>📚</span><span>✏️</span><span>⭐</span></div>
+      </section>
+
+      <section id="gameScreen" class="screen hidden">
+        <div class="game-header">
+          <div class="player-chip"><span>🧒</span><div><small>JUGADOR</small><b id="playerName">Amigo</b></div></div>
+          <div class="stats">
+            <div class="stat"><span>⭐</span><b id="scoreValue">0</b><small>puntos</small></div>
+            <div class="stat"><span>🏅</span><b id="levelValue">1</b><small>nivel</small></div>
+            <div class="stat timer-stat hidden" id="timerBox"><span>⏱️</span><b id="timerValue">10:00</b><small>tiempo</small></div>
+          </div>
+          <button id="homeButton" class="icon-btn" title="Volver al inicio">🏠</button>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-label">
+            <span id="progressText">Tu aventura</span>
+            <span id="progressCount">0 / 0</span>
+          </div>
+          <div class="progress-track"><div id="progressBar"></div></div>
+        </div>
+
+        <nav class="game-nav">
+          <button class="nav-btn active" data-panel="playPanel">🎮 Jugar</button>
+          <button class="nav-btn" data-panel="alphabetPanel">🔤 Abecedario (A-Z)</button>
+          <button class="nav-btn" data-panel="syllablePanel">📖 Sílabas</button>
+          <button class="nav-btn" data-panel="freeWritePanel">✍️ Escritura Libre</button>
+          <button class="nav-btn" data-panel="profilePanel">🏆 Mi avance</button>
+        </nav>
+
+        <section id="playPanel" class="panel">
+          <div id="difficultyPicker" class="difficulty-picker">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">ELIGE TU CAMINO</p>
+                <h2>¿Qué aventura quieres?</h2>
+              </div>
+              <span class="heading-emoji">🗺️</span>
+            </div>
+            <div class="difficulty-grid">
+              <button class="difficulty-card easy" data-difficulty="easy">
+                <span class="difficulty-icon">🐣</span>
+                <b>Fácil</b>
+                <small>Reconoce letras y sílabas</small>
+                <span class="card-arrow">¡Vamos! →</span>
+              </button>
+              <button class="difficulty-card medium" data-difficulty="medium">
+                <span class="difficulty-icon">🦋</span>
+                <b>Medio</b>
+                <small>Lee y escribe palabras y frases</small>
+                <span class="card-arrow">¡A practicar! →</span>
+              </button>
+              <button class="difficulty-card hard" data-difficulty="hard">
+                <span class="difficulty-icon">🦁</span>
+                <b>Difícil</b>
+                <small>Lee y escribe con 10 minutos</small>
+                <span class="card-arrow">¡Acepto el reto! →</span>
+              </button>
+            </div>
+            <div class="daily-tip">💡 <b>Consejito:</b> equivocarse también es aprender. ¡Inténtalo otra vez!</div>
+          </div>
+
+          <div id="exerciseArea" class="exercise-area hidden">
+            <div class="exercise-top">
+              <button id="backLevels" class="back-btn">← Cambiar dificultad</button>
+              <span id="difficultyTag" class="difficulty-tag">FÁCIL</span>
+            </div>
+            <div class="level-strip">
+              <span id="levelTitle">Nivel 1</span>
+              <span id="exerciseNumber">Reto 1</span>
+            </div>
+            <div class="exercise-card">
+              <div id="exerciseMascot" class="mascot-companion neutral" title="¡Te acompaño en tu reto!">
+                <div class="mascot-face" id="mascotFace">🦊</div>
+              </div>
+
+              <div id="exerciseIcon" class="exercise-icon">🐱</div>
+              <p id="exerciseInstruction" class="instruction">Escucha y encuentra la letra</p>
+              <h2 id="exercisePrompt" class="prompt">A</h2>
+              <p id="exerciseHint" class="exercise-hint">Presiona la letra correcta en tu teclado.</p>
+              <div id="answerChoices" class="answer-choices"></div>
+              <div id="typingArea" class="typing-area hidden">
+                <button id="repeatWordButton" class="listen-btn repeat-word-btn" type="button">🔊 Repetir palabra</button>
+                <input id="answerInput" type="text" maxlength="90" autocomplete="off" placeholder="Escribe aquí..." aria-label="Tu respuesta">
+                <button id="checkAnswer" class="primary-btn">Comprobar ✨</button>
+              </div>
+              <div id="readArea" class="read-area hidden">
+                <button id="listenButton" class="listen-btn">🔊 Repetir frase</button>
+                <button id="readDone" class="primary-btn">¡Ya lo leí! →</button>
+              </div>
+              <div id="feedback" class="feedback" aria-live="polite"></div>
+            </div>
+            <div class="exercise-footer">
+              <span>🌟 Cada reto te ayuda a crecer</span>
+              <button id="nextExercise" class="primary-btn hidden">Siguiente reto →</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Sección Abecedario A - Z -->
+        <section id="alphabetPanel" class="panel hidden">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">CONOCE LAS LETRAS</p>
+              <h2>Abecedario de la A a la Z</h2>
+              <p class="subheading">Haz clic en cualquier letra para escuchar cómo se pronuncia.</p>
+            </div>
+            <span class="heading-emoji">🔤</span>
+          </div>
+          <div id="alphabetGrid" class="alphabet-grid"></div>
+        </section>
+
+        <section id="syllablePanel" class="panel hidden">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">CONSULTA Y PRACTICA</p>
+              <h2>El mundo de las sílabas</h2>
+              <p class="subheading">Explora combinaciones de consonantes y vocales. Toca una sílaba para escucharla.</p>
+            </div>
+            <span class="heading-emoji">📚</span>
+          </div>
+          <div class="syllable-tools">
+            <input id="syllableSearch" placeholder="Buscar sílaba: bra, ma, pla..." aria-label="Buscar sílaba">
+            <select id="syllableFilter" aria-label="Filtrar sílabas">
+              <option value="all">Todas las sílabas</option>
+              <option value="simple">Sílabas simples</option>
+              <option value="direct">Sílabas trabadas</option>
+              <option value="special">Otras combinaciones</option>
+            </select>
+          </div>
+          <div id="syllableGroups" class="syllable-groups"></div>
+          <p class="syllable-note">Nota: el español tiene muchas combinaciones y excepciones. Este banco reúne sílabas frecuentes para practicar; no es una lista cerrada de todas las sílabas posibles.</p>
+        </section>
+
+        <!-- Sección de Escritura Libre -->
+        <section id="freeWritePanel" class="panel hidden">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">EXPRÉSATE LIBREMENTE</p>
+              <h2>Bloc de Escritura Libre</h2>
+              <p class="subheading">Escribe lo que quieras y presiona el botón para escucharlo.</p>
+            </div>
+            <span class="heading-emoji">✍️</span>
+          </div>
+          <div class="free-write-box">
+            <textarea id="freeTextArea" rows="6" placeholder="Escribe aquí tu propia historia, palabras o mensajes..."></textarea>
+            <button id="speakFreeTextBtn" class="primary-btn start-btn">🔊 Escuchar lo que escribí</button>
+          </div>
+        </section>
+
+        <section id="profilePanel" class="panel hidden">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">¡MIRA TODO LO QUE LOGRASTE!</p>
+              <h2>Mi avance</h2>
+            </div>
+            <span class="heading-emoji">🏆</span>
+          </div>
+          <div class="progress-summary">
+            <div class="summary-card"><span>⭐</span><b id="totalScore">0</b><small>Puntos ganados</small></div>
+            <div class="summary-card"><span>🎯</span><b id="totalDone">0</b><small>Retos completados</small></div>
+            <div class="summary-card"><span>🗺️</span><b id="unlockedLevels">1</b><small>Niveles alcanzados</small></div>
+          </div>
+          <h3 class="subsection-title">Tus aventuras por dificultad</h3>
+          <div id="progressByDifficulty" class="progress-by-difficulty"></div>
+          <div class="profile-actions">
+            <button id="switchUser" class="secondary-btn">👥 Cambiar usuario</button>
+            <button id="resetProgress" class="secondary-btn danger">Reiniciar mi avance</button>
+          </div>
+        </section>
+      </section>
+
+      <section id="finishScreen" class="screen finish-screen hidden">
+        <div class="finish-confetti">🎉 ⭐ 🎊</div>
+        <div class="finish-mascot">🦄</div>
+        <p class="eyebrow">¡MISIÓN CUMPLIDA!</p>
+        <h1 id="finishTitle">¡Excelente trabajo!</h1>
+        <p id="finishMessage">Has completado tu aventura.</p>
+        <div class="finish-score"><span>⭐</span><b id="finishPoints">0</b><small>puntos ganados</small></div>
+        <button id="playAgain" class="primary-btn">Elegir otra aventura 🚀</button>
+      </section>
+    </main>
+    <footer>Hecho para aprender jugando <span>💜</span> · Palabritas</footer>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
